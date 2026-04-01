@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 class Menu:
     def __init__(self, terminal: Terminal):
-        self.terminal:Terminal = terminal
+        self.terminal: Terminal = terminal
 
     @abstractmethod
     def render() -> None:
@@ -34,7 +34,7 @@ Q) Quit
         user_input: str = input().lower()
         match user_input:
             case "1":
-                self.terminal.navigate(NewStudentMenu(self.terminal)) 
+                self.terminal.navigate(NewStudentMenu(self.terminal))
             case "2":
                 self.terminal.navigate(NewProfessorMenu(self.terminal))
             case "3":
@@ -48,69 +48,61 @@ Q) Quit
 
 class NewStudentMenu(Menu):
     def render(self):
-                print("""
+        print("""
 ===========================
 New Student Menu
 """)
-                
-                print("First name: ")
-                first_name: str = input()
-                print("Last name: ")
-                last_name: str = input()
-                print("Major: ")
-                major: str = input()
-                print("Email: ")
-                email: str = input()
-                print("Year: ")
-                year: str = input()
-                # Implement validation steps between prompts?
+        print("First name: ")
+        first_name: str = input()
+        print("Last name: ")
+        last_name: str = input()
+        print("Major: ")
+        major: str = input()
+        print("Email: ")
+        email: str = input()
+        print("Year: ")
+        year: str = input()
 
-                new_student: Student = Student(first_name, last_name, major, email, year)
-                self.terminal.student_service.save(new_student)
+        new_student: Student = Student(first_name, last_name, major, email, year)
+        self.terminal.student_service.save(new_student)
 
-                self.terminal.navigate(MainMenu(self.terminal))
-                
+        self.terminal.navigate(MainMenu(self.terminal))
+
 class NewProfessorMenu(Menu):
     def render(self):
-                print("""
+        print("""
 ===========================
 New Professor Menu
 """)
-                
-                print("First name: ")
-                first_name: str = input()
-                print("Last name: ")
-                last_name: str = input()
-                print("Department: ")
-                department: str = input()
-                print("Email: ")
-                email: str = input()
-          
-                # Implement validation steps between prompts?
+        print("First name: ")
+        first_name: str = input()
+        print("Last name: ")
+        last_name: str = input()
+        print("Department: ")
+        department: str = input()
+        print("Email: ")
+        email: str = input()
 
-                new_professor: Professor = Professor(first_name, last_name, department, email)
-                self.terminal.professor_service.save(new_professor)
+        new_professor: Professor = Professor(first_name, last_name, department, email)
+        self.terminal.professor_service.save(new_professor)
 
-                self.terminal.navigate(MainMenu(self.terminal))
-                
+        self.terminal.navigate(MainMenu(self.terminal))
+
 class NewClassMenu(Menu):
     def render(self):
-                print("""
+        print("""
 ===========================
 New Class Menu
 """)
-                
-                print("Class name: ")
-                class_name: str = input()
-                
-                # Implement validation steps between prompts?
+        print("Class name: ")
+        class_name: str = input()
 
-                new_class: Classes = Classes(class_name)
-                self.terminal.class_service.save(new_class)
+        new_class: Classes = Classes(class_name)
+        self.terminal.class_service.save(new_class)
 
-                self.terminal.navigate(MainMenu(self.terminal))
+        self.terminal.navigate(MainMenu(self.terminal))
+
 class EnrollmentMenu(Menu):
-    # render() is what prints the menu to the terminal
     def render(self):
         print("""
 ===========================
@@ -119,26 +111,22 @@ Enrollment Menu
 2) Drop student from class
 3) Back to main menu
         """)
-        # We use input() to let the user select an option.
         choice: str = input().lower()
-        # The match statement calls different methods based on the user's choice.
         match choice:
             case "1":
                 self.enroll_student()
             case "2":
                 self.drop_student()
             case "3":
-                # This lets the user go back to the main menu
                 self.terminal.navigate(MainMenu(self.terminal))
             case _:
                 print("Invalid choice.")
                 self.terminal.navigate(self)
-# We need a method to enroll a student in a class. 
+
+    # Fix: enroll_student and drop_student were outdented outside the class
     def enroll_student(self):
-        # Ask for the Student ID
         print("Enter Student ID: ")
         student_id: str = input()
-        # Use the student service to get the student object based on the ID
         student = self.terminal.student_service.get_by_id(student_id)
         if not student:
             print("Student not found.")
@@ -153,7 +141,6 @@ Enrollment Menu
             self.render()
             return
 
-        # Prevent duplicate enrollment
         if self.terminal.enrollment_service.is_enrolled(student, class_obj):
             print(f"{student.first_name} {student.last_name} is already enrolled in {class_obj.name}.")
         else:
@@ -162,7 +149,7 @@ Enrollment Menu
 
         input("Press Enter to continue...")
         self.render()
-# We also need a method to drop a student from a class.
+
     def drop_student(self):
         print("Enter Student ID: ")
         student_id: str = input()
@@ -188,6 +175,7 @@ Enrollment Menu
 
         input("Press Enter to continue...")
         self.render()
+
 class ReportMenu(Menu):
     def render(self):
         print("""
