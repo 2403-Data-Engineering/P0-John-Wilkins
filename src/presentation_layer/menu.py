@@ -110,6 +110,7 @@ New Class Menu
 
                 self.terminal.navigate(MainMenu(self.terminal))
 class EnrollmentMenu(Menu):
+    # render() is what prints the menu to the terminal
     def render(self):
         print("""
 ===========================
@@ -118,21 +119,26 @@ Enrollment Menu
 2) Drop student from class
 3) Back to main menu
         """)
+        # We use input() to let the user select an option.
         choice: str = input().lower()
+        # The match statement calls different methods based on the user's choice.
         match choice:
             case "1":
                 self.enroll_student()
             case "2":
                 self.drop_student()
             case "3":
+                # This lets the user go back to the main menu
                 self.terminal.navigate(MainMenu(self.terminal))
             case _:
                 print("Invalid choice.")
                 self.terminal.navigate(self)
-
+# We need a method to enroll a student in a class. 
     def enroll_student(self):
+        # Ask for the Student ID
         print("Enter Student ID: ")
         student_id: str = input()
+        # Use the student service to get the student object based on the ID
         student = self.terminal.student_service.get_by_id(student_id)
         if not student:
             print("Student not found.")
@@ -156,7 +162,7 @@ Enrollment Menu
 
         input("Press Enter to continue...")
         self.render()
-
+# We also need a method to drop a student from a class.
     def drop_student(self):
         print("Enter Student ID: ")
         student_id: str = input()

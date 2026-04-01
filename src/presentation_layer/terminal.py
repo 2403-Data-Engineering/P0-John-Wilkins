@@ -3,6 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from service_layer.student_service import StudentService
+from service_layer.professor_service import ProfessorService
+from service_layer.class_service import ClassService
 
 
 if TYPE_CHECKING:

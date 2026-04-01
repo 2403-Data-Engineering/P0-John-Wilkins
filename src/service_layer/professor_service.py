@@ -1,8 +1,8 @@
 from models.professor import Professor
 
 
-class Professor
-Service:
+class ProfessorService:
+
 
     def save(self, professor: Professor) -> Professor:
         print("TODO: Implement the professor service save method....")
