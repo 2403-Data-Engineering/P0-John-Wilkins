@@ -38,7 +38,7 @@ Q) Quit
             case "2":
                 self.terminal.navigate(NewProfessorMenu(self.terminal))
             case "3":
-                print("TODO: IMPLEMENT ME")
+                self.terminal.navigate(NewClassMenu(self.terminal))
             case "4":
                 print("TODO: IMPLEMENT ME")
             case "5":
@@ -90,5 +90,22 @@ New Professor Menu
 
                 new_professor: Professor = Professor(first_name, last_name, department, email)
                 self.terminal.professor_service.save(new_professor)
+
+                self.terminal.navigate(MainMenu(self.terminal))
+                
+class NewClassMenu(Menu):
+    def render(self):
+                print("""
+===========================
+New Class Menu
+""")
+                
+                print("Class name: ")
+                class_name: str = input()
+                
+                # Implement validation steps between prompts?
+
+                new_class: Classes = Classes(class_name)
+                self.terminal.class_service.save(new_class)
 
                 self.terminal.navigate(MainMenu(self.terminal))
