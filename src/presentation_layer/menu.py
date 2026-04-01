@@ -40,9 +40,9 @@ Q) Quit
             case "3":
                 self.terminal.navigate(NewClassMenu(self.terminal))
             case "4":
-                print("TODO: IMPLEMENT ME")
+                self.terminal.navigate(EnrollmentMenu(self.terminal))
             case "5":
-                print("TODO: IMPLEMENT ME")
+                self.terminal.navigate(ReportMenu(self.terminal))
             case "q":
                 self.terminal.quit()
 
@@ -109,3 +109,124 @@ New Class Menu
                 self.terminal.class_service.save(new_class)
 
                 self.terminal.navigate(MainMenu(self.terminal))
+class EnrollmentMenu(Menu):
+    def render(self):
+        print("""
+===========================
+Enrollment Menu
+1) Enroll student in class
+2) Drop student from class
+3) Back to main menu
+        """)
+        choice: str = input().lower()
+        match choice:
+            case "1":
+                self.enroll_student()
+            case "2":
+                self.drop_student()
+            case "3":
+                self.terminal.navigate(MainMenu(self.terminal))
+            case _:
+                print("Invalid choice.")
+                self.terminal.navigate(self)
+
+    def enroll_student(self):
+        print("Enter Student ID: ")
+        student_id: str = input()
+        student = self.terminal.student_service.get_by_id(student_id)
+        if not student:
+            print("Student not found.")
+            self.render()
+            return
+
+        print("Enter Class ID: ")
+        class_id: str = input()
+        class_obj = self.terminal.class_service.get_by_id(class_id)
+        if not class_obj:
+            print("Class not found.")
+            self.render()
+            return
+
+        # Prevent duplicate enrollment
+        if self.terminal.enrollment_service.is_enrolled(student, class_obj):
+            print(f"{student.first_name} {student.last_name} is already enrolled in {class_obj.name}.")
+        else:
+            self.terminal.enrollment_service.enroll(student, class_obj)
+            print(f"{student.first_name} {student.last_name} has been enrolled in {class_obj.name}.")
+
+        input("Press Enter to continue...")
+        self.render()
+
+    def drop_student(self):
+        print("Enter Student ID: ")
+        student_id: str = input()
+        student = self.terminal.student_service.get_by_id(student_id)
+        if not student:
+            print("Student not found.")
+            self.render()
+            return
+
+        print("Enter Class ID: ")
+        class_id: str = input()
+        class_obj = self.terminal.class_service.get_by_id(class_id)
+        if not class_obj:
+            print("Class not found.")
+            self.render()
+            return
+
+        if self.terminal.enrollment_service.is_enrolled(student, class_obj):
+            self.terminal.enrollment_service.drop(student, class_obj)
+            print(f"{student.first_name} {student.last_name} has been removed from {class_obj.name}.")
+        else:
+            print(f"{student.first_name} {student.last_name} is not enrolled in {class_obj.name}.")
+
+        input("Press Enter to continue...")
+        self.render()
+class ReportMenu(Menu):
+    def render(self):
+        print("""
+===========================
+Reports Menu
+1) Student Enrollment Report
+2) Professor Summary Report
+3) Back to main menu
+        """)
+        choice: str = input().lower()
+        match choice:
+            case "1":
+                self.student_enrollment_report()
+            case "2":
+                self.professor_summary_report()
+            case "3":
+                self.terminal.navigate(MainMenu(self.terminal))
+            case _:
+                print("Invalid choice.")
+                self.render()
+
+    def student_enrollment_report(self):
+        print("Enter Student ID: ")
+        student_id: str = input()
+        student = self.terminal.student_service.get_by_id(student_id)
+        if not student:
+            print("Student not found.")
+            self.render()
+            return
+
+        self.terminal.report_service.generate_student_report(student)
+        print(f"Student enrollment report generated for {student.first_name} {student.last_name}.")
+        input("Press Enter to continue...")
+        self.render()
+
+    def professor_summary_report(self):
+        print("Enter Professor ID: ")
+        professor_id: str = input()
+        professor = self.terminal.professor_service.get_by_id(professor_id)
+        if not professor:
+            print("Professor not found.")
+            self.render()
+            return
+
+        self.terminal.report_service.generate_professor_report(professor)
+        print(f"Professor summary report generated for {professor.first_name} {professor.last_name}.")
+        input("Press Enter to continue...")
+        self.render()
