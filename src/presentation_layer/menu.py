@@ -63,6 +63,9 @@ class NewStudentMenu(Menu):
 New Student Menu
 """)
 # Collect user input for the new student
+        print("Please enter the following information for the new student.")
+        print("ID: ")
+        student_id: int = int(input())
         print("First name: ")
         first_name: str = input()
         print("Last name: ")
@@ -74,7 +77,7 @@ New Student Menu
         print("Year: ")
         year: str = input()
 # Create a new Student object based on their input
-        new_student: Student = Student(first_name, last_name, major, email, year)
+        new_student: Student = Student(student_id,first_name, last_name, major, email, year)
 # Save student using service layer
         self.terminal.student_service.save(new_student)
 # Return to main menu
@@ -86,6 +89,9 @@ class NewProfessorMenu(Menu):
 ===========================
 New Professor Menu
 """)
+        print("Please enter the following information for the new professor.")
+        print("ID: ")
+        professor_id: int = int(input())
         print("First name: ")
         first_name: str = input()
         print("Last name: ")
@@ -95,7 +101,7 @@ New Professor Menu
         print("Email: ")
         email: str = input()
 
-        new_professor: Professor = Professor(first_name, last_name, department, email)
+        new_professor: Professor = Professor(professor_id, first_name, last_name, department, email)
         self.terminal.professor_service.save(new_professor)
 
         self.terminal.navigate(MainMenu(self.terminal))
@@ -106,10 +112,13 @@ class NewClassMenu(Menu):
 ===========================
 New Class Menu
 """)
+        print("Please enter the following information for the new class.")
+        print("ID: ")
+        class_id: int = int(input())
         print("Class name: ")
         class_name: str = input()
 
-        new_class: Classes = Classes(class_name)
+        new_class: Classes = Classes(class_id, class_name)
         self.terminal.class_service.save(new_class)
 
         self.terminal.navigate(MainMenu(self.terminal))
@@ -140,7 +149,7 @@ Enrollment Menu
 # Handles enrolling a student into a class
     def enroll_student(self):
         print("Enter Student ID: ")
-        student_id: str = input()
+        student_id: int = int(input())
         # Retrieve student from service
         student = self.terminal.student_service.get_by_id(student_id)
         if not student:
@@ -149,7 +158,7 @@ Enrollment Menu
             return
 
         print("Enter Class ID: ")
-        class_id: str = input()
+        class_id: int = int(input())
         # Retrieve class
         class_obj = self.terminal.class_service.get_by_id(class_id)
         if not class_obj:
@@ -158,18 +167,18 @@ Enrollment Menu
             return
 # Check if they are already enrolled in that class
         if self.terminal.enrollment_service.is_enrolled(student, class_obj):
-            print(f"{student.first_name} {student.last_name} is already enrolled in {class_obj.name}.")
+            print(f"{student.first_name} {student.last_name} is already enrolled in {class_obj.class_name}.")
         else:
             # enroll them if not already enrolled
             self.terminal.enrollment_service.enroll(student, class_obj)
-            print(f"{student.first_name} {student.last_name} has been enrolled in {class_obj.name}.")
+            print(f"{student.first_name} {student.last_name} has been enrolled in {class_obj.class_name}.")
 
         input("Press Enter to continue...")
         self.render()
 # Handles removing a student from a class
     def drop_student(self):
         print("Enter Student ID: ")
-        student_id: str = input()
+        student_id: int = int(input())
         student = self.terminal.student_service.get_by_id(student_id)
         if not student:
             print("Student not found.")
@@ -177,7 +186,7 @@ Enrollment Menu
             return
 
         print("Enter Class ID: ")
-        class_id: str = input()
+        class_id: int = int(input())
         class_obj = self.terminal.class_service.get_by_id(class_id)
         if not class_obj:
             print("Class not found.")
@@ -186,9 +195,9 @@ Enrollment Menu
 # Check enrollment before dropping
         if self.terminal.enrollment_service.is_enrolled(student, class_obj):
             self.terminal.enrollment_service.drop(student, class_obj)
-            print(f"{student.first_name} {student.last_name} has been removed from {class_obj.name}.")
+            print(f"{student.first_name} {student.last_name} has been removed from {class_obj.class_name}.")
         else:
-            print(f"{student.first_name} {student.last_name} is not enrolled in {class_obj.name}.")
+            print(f"{student.first_name} {student.last_name} is not enrolled in {class_obj.class_name}.")
 
         input("Press Enter to continue...")
         self.render()
@@ -217,7 +226,7 @@ Reports Menu
 # Generates a report for a specific student
     def student_enrollment_report(self):
         print("Enter Student ID: ")
-        student_id: str = input()
+        student_id: int = int(input())
         student = self.terminal.student_service.get_by_id(student_id)
         if not student:
             print("Student not found.")
@@ -231,7 +240,7 @@ Reports Menu
 
     def professor_summary_report(self):
         print("Enter Professor ID: ")
-        professor_id: str = input()
+        professor_id: int = int(input())
         professor = self.terminal.professor_service.get_by_id(professor_id)
         if not professor:
             print("Professor not found.")
