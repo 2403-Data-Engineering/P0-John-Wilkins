@@ -41,7 +41,7 @@ class Terminal:
         self.professor_service = ProfessorService()
         self.class_service = ClassService()
         self.enrollment_service = EnrollmentService()
-        self.report_service = ReportService()
+        self.report_service = ReportService(self.enrollment_service)
         self.current_menu = MainMenu(self)  # Fix: MainMenu is now imported above
 
     def navigate(self, menu: Menu):
