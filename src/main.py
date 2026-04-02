@@ -14,3 +14,19 @@ if __name__ == "__main__":
         terminal.current_menu.render()
     # Runs after the loop ends (when user quits)
     print("...Goodbye!")
+
+    '''
+Big Picture
+
+This file is your entry point (like main() in other languages):
+
+Starts the app
+Runs the loop
+Hands control to the Terminal + Menus
+
+If you want, next I can help you:
+
+Add error handling to prevent crashes
+Add a clean exit strategy (like saving state)
+Or structure this like a production-ready CLI app
+    '''
