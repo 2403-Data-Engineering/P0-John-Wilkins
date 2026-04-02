@@ -1,5 +1,6 @@
 # Allows forward references in type hints
 # so you can reference classes before thhey are fully defined
+#Type checking doesn't work without these annotations from future
 from __future__ import annotations
 # Used to define abstract base classes (classes that are meant to be inherited from)
 from abc import abstractmethod
