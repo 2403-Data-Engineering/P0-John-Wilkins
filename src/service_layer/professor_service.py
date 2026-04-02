@@ -2,6 +2,7 @@ from models.professor import Professor
 
 
 class ProfessorService:
+#add dummy data for testing purposes
 
 
     def save(self, professor: Professor) -> Professor:

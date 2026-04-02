@@ -1,5 +1,5 @@
 from presentation_layer.terminal import Terminal
-from service_layer.student_service import StudentService
+# from service_layer.student_service import StudentService
 
 
 if __name__ == "__main__":
