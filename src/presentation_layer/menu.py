@@ -3,6 +3,12 @@
 #Type checking doesn't work without these annotations from future
 from __future__ import annotations
 # Used to define abstract base classes (classes that are meant to be inherited from)
+'''What is an abstract class and how do you define it in Python?
+
+    An abstract class is a class that cannot be instantiated and often contains one or more abstract methods that must be implemented by subclasses.
+    In Python, abstract classes are defined using the abc module and the ABC class.
+    Abstract methods are defined with the @abstractmethod decorator.
+'''
 from abc import abstractmethod
 # Used to avoid circular imports at runtime
 from typing import TYPE_CHECKING
