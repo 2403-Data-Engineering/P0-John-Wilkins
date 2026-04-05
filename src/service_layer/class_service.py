@@ -4,8 +4,9 @@ from models.classes import Classes
 class ClassService:
     def __init__(self):
         self.classes = [
-            Classes(101, "Algorithms"),
-            Classes(102, "Databases")
+            Classes(101, "Algorithms", 1),
+            Classes(102, "Databases", 2),
+            Classes(103, "Operating Systems", 1),
         ]
 
     def get_by_id(self, class_id: int):

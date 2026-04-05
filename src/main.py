@@ -1,6 +1,7 @@
 # Import the Terminal class (main application controller)
 from presentation_layer.terminal import Terminal
-
+from dotenv import load_dotenv
+load_dotenv()
 
 # This ensures the code only runs when this file is executed directly
 # (and not when it's imported into another file)

@@ -123,8 +123,10 @@ New Class Menu
         class_id: int = int(input())
         print("Class name: ")
         class_name: str = input()
+        print("Professor ID: ")
+        professor_id: int = int(input())
 
-        new_class: Classes = Classes(class_id, class_name)
+        new_class: Classes = Classes(class_id, class_name, professor_id)
         self.terminal.class_service.save(new_class)
 
         self.terminal.navigate(MainMenu(self.terminal))
