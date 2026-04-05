@@ -17,4 +17,4 @@ class Student:
         self.last_name = last_name
         self.major = major
         self.email = email
-        self.year = year
+        self.year = year  # "Freshman", "Sophomore", "Junior", "Senior"

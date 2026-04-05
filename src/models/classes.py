@@ -6,11 +6,9 @@ from dataclasses import dataclass
 # The @dataclass decorator tells Python to treat this class as a data container
 # It automatically creates an __init__ method and other useful methods for you
 @dataclass
-# class Classes:
-#     id : int
-#     class_name: str
 class Classes:
-    def __init__(self, id: int, class_name: str):
+    def __init__(self, id: int, class_name: str, professor_id: int):
         self.id = id
         self.class_name = class_name
-        self.students = []  # needed for enrollment
+        self.professor_id = professor_id
+        self.students = []
