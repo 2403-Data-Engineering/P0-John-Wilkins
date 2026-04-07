@@ -1,20 +1,22 @@
 from models.classes import Classes
-
+import data_layer.class_dao as class_dao
 
 class ClassService:
-    def __init__(self):
-        self.classes = [
-            Classes(101, "Algorithms", 1),
-            Classes(102, "Databases", 2),
-            Classes(103, "Operating Systems", 1),
-        ]
 
-    def get_by_id(self, class_id: int):
-        for c in self.classes:
-            if c.id == class_id:
-                return c
-        return None
+    def get_all(self) -> list[Classes]:
+        return class_dao.get_all()
+
+    def get_by_id(self, class_id: int) -> Classes | None:
+        return class_dao.get_by_id(class_id)
+
+    def get_by_professor(self, professor_id: int) -> list[Classes]:
+        return class_dao.get_by_professor(professor_id)
+
     def save(self, classes: Classes) -> Classes:
-        print("TODO: Implement the class service save method....")
-        print("...for now pretend that worked.")
-        print("CLASS SAVED!")
+        return class_dao.save(classes)
+
+    def update(self, classes: Classes) -> None:
+        class_dao.update(classes)
+
+    def delete(self, class_id: int) -> None:
+        class_dao.delete(class_id)

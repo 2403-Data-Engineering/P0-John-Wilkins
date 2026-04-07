@@ -1,21 +1,19 @@
 from models.professor import Professor
-
+import data_layer.professor_dao as professor_dao
 
 class ProfessorService:
-#add dummy data for testing purposes
-    def __init__(self):
-            self.professors = [
-                Professor(1, "John", "Doe", "Computer Science", "jdoe@email.com"),
-                Professor(2, "Jane", "Smith", "Mathematics", "jsmith@email.com")
-            ]
 
-    def get_by_id(self, professor_id: int):
-        for professor in self.professors:
-            if professor.id == professor_id:
-                return professor
-        return None
+    def get_all(self) -> list[Professor]:
+        return professor_dao.get_all()
+
+    def get_by_id(self, professor_id: int) -> Professor | None:
+        return professor_dao.get_by_id(professor_id)
 
     def save(self, professor: Professor) -> Professor:
-        print("TODO: Implement the professor service save method....")
-        print("...for now pretend that worked.")
-        print("PROFESSOR SAVED!")
+        return professor_dao.save(professor)
+
+    def update(self, professor: Professor) -> None:
+        professor_dao.update(professor)
+
+    def delete(self, professor_id: int) -> None:
+        professor_dao.delete(professor_id)
