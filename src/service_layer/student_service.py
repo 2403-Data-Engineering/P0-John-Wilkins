@@ -4,6 +4,9 @@ import data_layer.student_dao as student_dao
 VALID_YEARS = {"Freshman", "Sophomore", "Junior", "Senior"}
 
 class StudentService:
+   
+    def __init__(self, student_dao):
+        self.student_dao = student_dao
 # View all students
     def get_all(self) -> list[Student]:
         return student_dao.get_all()
