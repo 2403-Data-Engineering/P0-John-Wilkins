@@ -37,23 +37,23 @@ class MainMenu(Menu):
         print("""
 ===========================
 Welcome to uRevature Admin
-1) Create new student
-2) Create new professor
-3) Create new class
-4) Enroll student in class
-5) Run report
+1) Manage Students
+2) Manage Professors
+3) Manage Classes
+4) Enrollment
+5) Reports
 Q) Quit
-        """)
+            """)
 # Get user input and normalize it to lowercase
         user_input: str = input().lower()
         # Match user choice to the different actions
         match user_input:
             case "1":
-                self.terminal.navigate(NewStudentMenu(self.terminal))
+                self.terminal.navigate(StudentMenu(self.terminal))
             case "2":
-                self.terminal.navigate(NewProfessorMenu(self.terminal))
+                self.terminal.navigate(ProfessorMenu(self.terminal))
             case "3":
-                self.terminal.navigate(NewClassMenu(self.terminal))
+                self.terminal.navigate(ClassMenu(self.terminal))
             case "4":
                 self.terminal.navigate(EnrollmentMenu(self.terminal))
             case "5":
@@ -61,7 +61,48 @@ Q) Quit
             case "q":
                 # Exit the application
                 self.terminal.quit()
+class StudentMenu(Menu):
+    def render(self):
+        print("""
+Student Menu
+1) Add Student
+2) View All Students
+3) Update Student
+4) Delete Student
+5) View Student Classes
+6) Back
+""")
+        choice = input()
 
+        match choice:
+            case "1":
+                self.terminal.navigate(NewStudentMenu(self.terminal))
+
+            case "2":
+                students = self.terminal.student_service.get_all()
+                for s in students:
+                    print(f"{s.student_id}: {s.first_name} {s.last_name}")
+
+            case "3":
+                student_id = int(input("Enter ID: "))
+                student = self.terminal.student_service.get_by_id(student_id)
+                if student:
+                    student.first_name = input("New first name: ")
+                    student.last_name = input("New last name: ")
+                    self.terminal.student_service.update(student)
+
+            case "4":
+                student_id = int(input("Enter ID: "))
+                self.terminal.student_service.delete(student_id)
+
+            case "5":
+                student_id = int(input("Enter ID: "))
+                classes = self.terminal.enrollment_service.get_classes_by_student(student_id)
+                for c in classes:
+                    print(c.class_name)
+
+            case "6":
+                self.terminal.navigate(MainMenu(self.terminal))
 class NewStudentMenu(Menu):
     def render(self):
         print("""
@@ -70,8 +111,8 @@ New Student Menu
 """)
 # Collect user input for the new student
         print("Please enter the following information for the new student.")
-        print("ID: ")
-        student_id: int = int(input())
+        # print("ID: ")
+        # student_id: int = int(input())
         print("First name: ")
         first_name: str = input()
         print("Last name: ")
@@ -83,11 +124,46 @@ New Student Menu
         print("Year: ")
         year: str = input()
 # Create a new Student object based on their input
-        new_student: Student = Student(student_id,first_name, last_name, major, email, year)
+        new_student: Student = Student(None,first_name, last_name, major, email, year)
 # Save student using service layer
         self.terminal.student_service.save(new_student)
 # Return to main menu
         self.terminal.navigate(MainMenu(self.terminal))
+class ProfessorMenu(Menu):
+    def render(self):
+        print("""
+Professor Menu
+1) Add Professor
+2) View All Professors
+3) Update Professor
+4) Delete Professor
+5) Back
+""")
+        choice = input()
+
+        match choice:
+            case "1":
+                self.terminal.navigate(NewProfessorMenu(self.terminal))
+
+            case "2":
+                professors = self.terminal.professor_service.get_all()
+                for p in professors:
+                    print(f"{p.professor_id}: {p.first_name} {p.last_name}")
+
+            case "3":
+                pid = int(input("Enter ID: "))
+                prof = self.terminal.professor_service.get_by_id(pid)
+                if prof:
+                    prof.first_name = input("New first name: ")
+                    prof.last_name = input("New last name: ")
+                    self.terminal.professor_service.update(prof)
+
+            case "4":
+                pid = int(input("Enter ID: "))
+                self.terminal.professor_service.delete(pid)
+
+            case "5":
+                self.terminal.navigate(MainMenu(self.terminal))
 # Menu for creating a new professor
 class NewProfessorMenu(Menu):
     def render(self):
@@ -96,8 +172,8 @@ class NewProfessorMenu(Menu):
 New Professor Menu
 """)
         print("Please enter the following information for the new professor.")
-        print("ID: ")
-        professor_id: int = int(input())
+        # print("ID: ")
+        # professor_id: int = int(input())
         print("First name: ")
         first_name: str = input()
         print("Last name: ")
@@ -107,11 +183,53 @@ New Professor Menu
         print("Email: ")
         email: str = input()
 
-        new_professor: Professor = Professor(professor_id, first_name, last_name, department, email)
+        new_professor: Professor = Professor(None, first_name, last_name, department, email)
         self.terminal.professor_service.save(new_professor)
 
         self.terminal.navigate(MainMenu(self.terminal))
+class ClassMenu(Menu):
+    def render(self):
+        print("""
+Class Menu
+1) Add Class
+2) View All Classes
+3) Update Class
+4) Delete Class
+5) View Students in Class
+6) Back
+""")
+        choice = input()
 
+        match choice:
+            case "1":
+                self.terminal.navigate(NewClassMenu(self.terminal))
+
+            case "2":
+                classes = self.terminal.class_service.get_all()
+                for c in classes:
+                    prof = self.terminal.professor_service.get_by_id(c.professor_id)
+                    print(f"{c.class_name} - {prof.first_name} {prof.last_name}")
+
+            case "3":
+                cid = int(input("Enter Class ID: "))
+                c = self.terminal.class_service.get_by_id(cid)
+                if c:
+                    c.class_name = input("New name: ")
+                    c.professor_id = int(input("New professor ID: "))
+                    self.terminal.class_service.update(c)
+
+            case "4":
+                cid = int(input("Enter Class ID: "))
+                self.terminal.class_service.delete(cid)
+
+            case "5":
+                cid = int(input("Enter Class ID: "))
+                students = self.terminal.enrollment_service.get_students_by_class(cid)
+                for s in students:
+                    print(f"{s.first_name} {s.last_name}")
+
+            case "6":
+                self.terminal.navigate(MainMenu(self.terminal))
 class NewClassMenu(Menu):
     def render(self):
         print("""
@@ -119,14 +237,14 @@ class NewClassMenu(Menu):
 New Class Menu
 """)
         print("Please enter the following information for the new class.")
-        print("ID: ")
-        class_id: int = int(input())
+        # print("ID: ")
+        # class_id: int = int(input())
         print("Class name: ")
         class_name: str = input()
         print("Professor ID: ")
         professor_id: int = int(input())
 
-        new_class: Classes = Classes(class_id, class_name, professor_id)
+        new_class: Classes = Classes(None, class_name, professor_id)
         self.terminal.class_service.save(new_class)
 
         self.terminal.navigate(MainMenu(self.terminal))
@@ -195,17 +313,17 @@ Enrollment Menu
 
         print("Enter Class ID: ")
         class_id: int = int(input())
-        class_obj = self.terminal.class_service.get_by_id(class_id)
-        if not class_obj:
+        classes = self.terminal.class_service.get_by_id(class_id)
+        if not classes:
             print("Class not found.")
             self.render()
             return
 # Check enrollment before dropping
-        if self.terminal.enrollment_service.is_enrolled(student, class_obj):
-            self.terminal.enrollment_service.drop(student, class_obj)
-            print(f"{student.first_name} {student.last_name} has been removed from {class_obj.class_name}.")
+        if self.terminal.enrollment_service.is_enrolled(student, classes):
+            self.terminal.enrollment_service.drop(student, classes)
+            print(f"{student.first_name} {student.last_name} has been removed from {classes.class_name}.")
         else:
-            print(f"{student.first_name} {student.last_name} is not enrolled in {class_obj.class_name}.")
+            print(f"{student.first_name} {student.last_name} is not enrolled in {classes.class_name}.")
 
         input("Press Enter to continue...")
         self.render()

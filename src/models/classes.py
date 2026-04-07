@@ -7,8 +7,8 @@ from dataclasses import dataclass
 # It automatically creates an __init__ method and other useful methods for you
 @dataclass
 class Classes:
-    def __init__(self, id: int, class_name: str, professor_id: int):
-        self.id = id
+    def __init__(self, class_id: int, class_name: str, professor_id: int):
+        self.class_id = class_id
         self.class_name = class_name
         self.professor_id = professor_id
         self.students = []

@@ -28,7 +28,7 @@ def save(student: Student) -> Student:
             [student.first_name, student.last_name, student.major, student.email, student.year]
         )
         conn.commit()
-        student.id = cursor.lastrowid
+        student.student_id = cursor.lastrowid
         return student
 
 
@@ -37,7 +37,7 @@ def update(student: Student) -> None:
         cursor = conn.cursor()
         cursor.execute(
             "UPDATE student SET first_name=%s, last_name=%s, major=%s, email=%s, year=%s WHERE student_id=%s",
-            [student.first_name, student.last_name, student.major, student.email, student.year, student.id]
+            [student.first_name, student.last_name, student.major, student.email, student.year, student.student_id]
         )
         conn.commit()
 
