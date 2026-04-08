@@ -121,7 +121,7 @@ class ReportService:
             for cls in classes:
                 html_content += f"""
                 <tr>
-                    <td>{cls.id}</td>
+                    <td>{cls.class_id}</td>
                     <td>{cls.class_name}</td>
                 </tr>
                 """
@@ -139,7 +139,7 @@ class ReportService:
         """
 
         # Save to file
-        file_path = os.path.join(self.report_dir, f"professor_{professor.id}.html")
+        file_path = os.path.join(self.report_dir, f"professor_{professor.professor_id}.html")
         with open(file_path, "w") as f:
             f.write(html_content)
 
