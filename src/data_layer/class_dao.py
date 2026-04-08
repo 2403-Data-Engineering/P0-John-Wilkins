@@ -4,7 +4,8 @@ from models.classes import Classes
 class ClassDAO:
     def __init__(self, connection):
         # pass Connection is handled inside each function
-        def get_all() -> list[Classes]:
+        pass
+        def get_all(self) -> list[Classes]:
             with get_connection() as conn:
                 cursor = conn.cursor(dictionary=True)
                 cursor.execute("SELECT * FROM class")
@@ -12,7 +13,7 @@ class ClassDAO:
                 return [Classes(r["class_id"], r["class_name"], r["professor_id"]) for r in rows]
 
 
-        def get_by_id(class_id: int) -> Classes | None:
+        def get_by_id(self, class_id: int) -> Classes | None:
             with get_connection() as conn:
                 cursor = conn.cursor(dictionary=True)
                 cursor.execute("SELECT * FROM class WHERE class_id = %s", [class_id])
@@ -22,7 +23,7 @@ class ClassDAO:
                 return Classes(row["class_id"], row["class_name"], row["professor_id"])
 
 
-        def get_by_professor(professor_id: int) -> list[Classes]:
+        def get_by_professor(self, professor_id: int) -> list[Classes]:
             with get_connection() as conn:
                 cursor = conn.cursor(dictionary=True)
                 cursor.execute("SELECT * FROM class WHERE professor_id = %s", [professor_id])
@@ -30,7 +31,7 @@ class ClassDAO:
                 return [Classes(r["class_id"], r["class_name"], r["professor_id"]) for r in rows]
 
 
-        def save(classes: Classes) -> Classes:
+        def save(self, classes: Classes) -> Classes:
             with get_connection() as conn:
                 cursor = conn.cursor()
                 cursor.execute(
@@ -42,7 +43,7 @@ class ClassDAO:
                 return classes
 
 
-        def update(classes: Classes) -> None:
+        def update(self, classes: Classes) -> None:
             with get_connection() as conn:
                 cursor = conn.cursor()
                 cursor.execute(
@@ -52,7 +53,7 @@ class ClassDAO:
                 conn.commit()
 
 
-        def delete(class_id: int) -> None:
+        def delete(self, class_id: int) -> None:
             with get_connection() as conn:
                 cursor = conn.cursor()
                 cursor.execute("DELETE FROM class WHERE class_id = %s", [class_id])
