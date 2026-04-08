@@ -2,7 +2,8 @@ from models.classes import Classes
 import data_layer.class_dao as class_dao
 
 class ClassService:
-
+    def __init__(self, class_dao):
+        self.class_dao = class_dao
     def get_all(self) -> list[Classes]:
         return class_dao.get_all()
 
