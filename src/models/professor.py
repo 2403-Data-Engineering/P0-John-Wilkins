@@ -10,8 +10,8 @@ from dataclasses import dataclass
 #     department: str
 #     email: str
 class Professor:
-    def __init__(self, id: int, first_name: str, last_name: str, department: str, email: str):
-        self.id = id
+    def __init__(self, professor_id: int, first_name: str, last_name: str, department: str, email: str):
+        self.professor_id = professor_id
         self.first_name = first_name
         self.last_name = last_name
         self.department = department
