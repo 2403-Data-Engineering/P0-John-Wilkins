@@ -58,11 +58,7 @@ class Terminal:
             port=int(os.getenv("PORT"))
         )
 
-        # self.student_service = StudentService(self.connection)
-        # self.professor_service = ProfessorService(self.connection)
-        # self.class_service = ClassService(self.connection)
-        # self.enrollment_service = EnrollmentService(self.connection)
-        # self.report_service = ReportService(self.enrollment_service)
+
         
         self.student_dao = StudentDAO(self.connection)
         self.professor_dao = ProfessorDAO(self.connection)
