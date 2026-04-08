@@ -6,16 +6,16 @@ class ProfessorService:
         self.professor_dao = professor_dao
 
     def get_all(self) -> list[Professor]:
-        return professor_dao.get_all()
+        return self.professor_dao.get_all()
 
     def get_by_id(self, professor_id: int) -> Professor | None:
-        return professor_dao.get_by_id(professor_id)
+        return self.professor_dao.get_by_id(professor_id)
 
     def save(self, professor: Professor) -> Professor:
-        return professor_dao.save(professor)
+        return self.professor_dao.save(professor)
 
     def update(self, professor: Professor) -> None:
-        professor_dao.update(professor)
+        self.professor_dao.update(professor)
 
     def delete(self, professor_id: int) -> None:
-        professor_dao.delete(professor_id)
+        self.professor_dao.delete(professor_id)

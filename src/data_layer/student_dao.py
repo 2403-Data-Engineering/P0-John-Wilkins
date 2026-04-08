@@ -5,7 +5,7 @@ class StudentDAO:
     def __init__(self, connection):
         # pass Connection is handled inside each function
         pass
-    def get_all() -> list[Student]:
+    def get_all(self) -> list[Student]:
         with get_connection() as conn:
             cursor = conn.cursor(dictionary=True)
             cursor.execute("SELECT * FROM student")
@@ -13,7 +13,7 @@ class StudentDAO:
             return [Student(r["student_id"], r["first_name"], r["last_name"], r["major"], r["email"], r["year"]) for r in rows]
 
 
-    def get_by_id(student_id: int) -> Student | None:
+    def get_by_id(self, student_id: int) -> Student | None:
         with get_connection() as conn:
             cursor = conn.cursor(dictionary=True)
             cursor.execute("SELECT * FROM student WHERE student_id = %s", [student_id])
@@ -23,7 +23,7 @@ class StudentDAO:
             return Student(row["student_id"], row["first_name"], row["last_name"], row["major"], row["email"], row["year"])
 
 
-    def save(student: Student) -> Student:
+    def save(self, student: Student) -> Student:
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -35,7 +35,7 @@ class StudentDAO:
             return student
 
 
-    def update(student: Student) -> None:
+    def update(self, student: Student) -> None:
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -45,7 +45,7 @@ class StudentDAO:
             conn.commit()
 
 
-    def delete(student_id: int) -> None:
+    def delete(self, student_id: int) -> None:
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("DELETE FROM student WHERE student_id = %s", [student_id])
