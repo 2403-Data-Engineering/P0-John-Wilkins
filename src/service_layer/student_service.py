@@ -18,6 +18,8 @@ class StudentService:
         if student.year not in VALID_YEARS:
             raise ValueError(f"Invalid year '{student.year}'. Must be one of: {', '.join(VALID_YEARS)}")
         return student_dao.save(student)
+     
+
 # Update the student, with validation for the year field
     def update(self, student: Student) -> None:
         if student.year not in VALID_YEARS:

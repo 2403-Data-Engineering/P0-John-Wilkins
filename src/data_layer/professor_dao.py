@@ -4,6 +4,7 @@ from models.professor import Professor
 class ProfessorDAO:
     def __init__(self, connection):
         # pass Connection is handled inside each function
+        pass
     def get_all() -> list[Professor]:
         with get_connection() as conn:
             cursor = conn.cursor(dictionary=True)
@@ -29,9 +30,9 @@ class ProfessorDAO:
                 "INSERT INTO professor (first_name, last_name, department, email) VALUES (%s, %s, %s, %s)",
                 [professor.first_name, professor.last_name, professor.department, professor.email]
                 )
-                conn.commit()
-                professor.id = cursor.lastrowid
-                return professor
+        conn.commit()
+        professor.id = cursor.lastrowid
+        return professor
 
 
     def update(professor: Professor) -> None:
@@ -41,7 +42,7 @@ class ProfessorDAO:
                 "UPDATE professor SET first_name=%s, last_name=%s, department=%s, email=%s WHERE professor_id=%s",
                 [professor.first_name, professor.last_name, professor.department, professor.email, professor.id]
                 )
-                conn.commit()
+            conn.commit()
 
 
     def delete(professor_id: int) -> None:
