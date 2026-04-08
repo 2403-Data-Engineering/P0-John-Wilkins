@@ -6,7 +6,7 @@ class EnrollmentDAO:
     def __init__(self, connection):
         # pass Connection is handled inside each function
         pass
-    def is_enrolled(student_id: int, class_id: int) -> bool:
+    def is_enrolled(self, student_id: int, class_id: int) -> bool:
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -16,7 +16,7 @@ class EnrollmentDAO:
             return cursor.fetchone() is not None
 
 
-    def enroll(student_id: int, class_id: int) -> None:
+    def enroll(self, student_id: int, class_id: int) -> None:
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -26,7 +26,7 @@ class EnrollmentDAO:
             conn.commit()
 
 
-    def drop(student_id: int, class_id: int) -> None:
+    def drop(self, student_id: int, class_id: int) -> None:
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -36,7 +36,7 @@ class EnrollmentDAO:
             conn.commit()
 
 
-    def get_classes_for_student(student_id: int) -> list[Classes]:
+    def get_classes_for_student(self, student_id: int) -> list[Classes]:
         with get_connection() as conn:
             cursor = conn.cursor(dictionary=True)
             cursor.execute(
@@ -52,7 +52,7 @@ class EnrollmentDAO:
             return [Classes(r["class_id"], r["class_name"], r["professor_id"]) for r in rows]
 
 
-    def get_students_in_class(class_id: int) -> list[Student]:
+    def get_students_in_class(self, class_id: int) -> list[Student]:
         with get_connection() as conn:
             cursor = conn.cursor(dictionary=True)
             cursor.execute(
