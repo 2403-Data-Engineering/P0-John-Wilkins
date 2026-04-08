@@ -30,8 +30,8 @@ class ProfessorDAO:
                 "INSERT INTO professor (first_name, last_name, department, email) VALUES (%s, %s, %s, %s)",
                 [professor.first_name, professor.last_name, professor.department, professor.email]
                 )
-        conn.commit()
-        professor.id = cursor.lastrowid
+            conn.commit()
+            professor.id = cursor.lastrowid
         return professor
 
 
