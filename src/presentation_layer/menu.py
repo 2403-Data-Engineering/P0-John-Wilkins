@@ -208,7 +208,7 @@ Class Menu
                 classes = self.terminal.class_service.get_all()
                 for c in classes:
                     prof = self.terminal.professor_service.get_by_id(c.professor_id)
-                    print(f"{c.class_name} - {prof.first_name} {prof.last_name}")
+                    print(f"{c.class_id}:{c.class_name} - {prof.first_name} {prof.last_name}")
 
             case "3":
                 cid = int(input("Enter Class ID: "))
