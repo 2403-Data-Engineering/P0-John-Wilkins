@@ -19,7 +19,7 @@ class EnrollmentService:
             return
 
         query = """
-        INSERT INTO enrollments (student_id, class_id)
+        INSERT INTO enrollment (student_id, class_id)
         VALUES (%s, %s)
         """
         cursor = self.connection.cursor()
@@ -29,7 +29,7 @@ class EnrollmentService:
         
     def is_enrolled(self, student: Student, class_obj: Classes) -> bool:
         query = """
-        SELECT 1 FROM enrollments
+        SELECT 1 FROM enrollment
         WHERE student_id = %s AND class_id = %s
         """
         cursor = self.connection.cursor()
@@ -42,7 +42,7 @@ class EnrollmentService:
 
     def drop(self, student: Student, class_obj: Classes):
         query = """
-        DELETE FROM enrollments
+        DELETE FROM enrollment
         WHERE student_id = %s AND class_id = %s
         """
         cursor = self.connection.cursor()
@@ -60,8 +60,8 @@ class EnrollmentService:
         """
         query = """
         SELECT c.class_id, c.class_name, c.professor_id
-        FROM classes c
-        JOIN enrollments e ON c.class_id = e.class_id
+        FROM class c
+        JOIN enrollment e ON c.class_id = e.class_id
         WHERE e.student_id = %s
         """
         cursor = self.connection.cursor()
@@ -77,8 +77,8 @@ class EnrollmentService:
         """
         query = """
         SELECT s.student_id, s.first_name, s.last_name, s.major, s.email, s.year
-        FROM students s
-        JOIN enrollments e ON s.student_id = e.student_id
+        FROM student s
+        JOIN enrollment e ON s.student_id = e.student_id
         WHERE e.class_id = %s
         """
         cursor = self.connection.cursor()
