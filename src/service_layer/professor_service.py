@@ -2,6 +2,8 @@ from models.professor import Professor
 import data_layer.professor_dao as professor_dao
 
 class ProfessorService:
+    def __init__(self, professor_dao):
+        self.professor_dao = professor_dao
 
     def get_all(self) -> list[Professor]:
         return professor_dao.get_all()
