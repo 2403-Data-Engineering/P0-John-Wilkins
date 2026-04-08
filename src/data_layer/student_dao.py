@@ -23,7 +23,7 @@ class StudentDAO:
             return Student(row["student_id"], row["first_name"], row["last_name"], row["major"], row["email"], row["year"])
 
 
-   def save(student: Student) -> Student:
+    def save(student: Student) -> Student:
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
