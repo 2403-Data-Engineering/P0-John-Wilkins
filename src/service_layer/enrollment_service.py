@@ -98,7 +98,7 @@ class EnrollmentService:
         """
         query = """
         SELECT class_id, class_name, professor_id
-        FROM classes
+        FROM class
         WHERE professor_id = %s
         """
         cursor = self.connection.cursor()
