@@ -59,16 +59,17 @@ class Terminal:
         )
 
 
-        
+        # Initialize DAOs with the database connection
         self.student_dao = StudentDAO(self.connection)
         self.professor_dao = ProfessorDAO(self.connection)
         self.class_dao = ClassDAO(self.connection)
         self.enrollment_dao = EnrollmentDAO(self.connection)
-
+        # Initialize services with their respective DAOs
         self.student_service = StudentService(self.student_dao)
         self.professor_service = ProfessorService(self.professor_dao)
         self.class_service = ClassService(self.class_dao)
         self.enrollment_service = EnrollmentService(self.enrollment_dao)
+        self.report_service = ReportService(self.enrollment_dao)
         self.current_menu = MainMenu(self)
 
     def navigate(self, menu: Menu):
