@@ -68,7 +68,7 @@ class Terminal:
         self.student_service = StudentService(self.student_dao)
         self.professor_service = ProfessorService(self.professor_dao)
         self.class_service = ClassService(self.class_dao)
-        self.enrollment_service = EnrollmentService(self.enrollment_dao)
+        self.enrollment_service = EnrollmentService(self.connection)
         self.report_service = ReportService(self.enrollment_service)
         self.current_menu = MainMenu(self)
 
