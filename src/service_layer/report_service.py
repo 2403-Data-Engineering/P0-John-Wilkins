@@ -32,7 +32,7 @@ class ReportService:
         Generate an HTML report for a student listing all classes they are enrolled in.
         """
         # Get classes from EnrollmentService
-        classes = self.enrollment_service.get_student_classes(student)
+        classes = self.enrollment_service.get_classes_by_student(student.student_id)
 
         # Build HTML content
         html_content = f"""
@@ -63,7 +63,7 @@ class ReportService:
             for cls in classes:
                 html_content += f"""
                 <tr>
-                    <td>{cls.id}</td>
+                    <td>{cls.class_id}</td>
                     <td>{cls.class_name}</td>
                 </tr>
                 """
@@ -81,7 +81,7 @@ class ReportService:
         """
 
         # Save to file
-        file_path = os.path.join(self.report_dir, f"student_{student.id}.html")
+        file_path = os.path.join(self.report_dir, f"student_{student.student_id}.html")
         with open(file_path, "w") as f:
             f.write(html_content)
 
