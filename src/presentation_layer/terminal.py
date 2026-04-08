@@ -69,7 +69,7 @@ class Terminal:
         self.professor_service = ProfessorService(self.professor_dao)
         self.class_service = ClassService(self.class_dao)
         self.enrollment_service = EnrollmentService(self.enrollment_dao)
-        self.report_service = ReportService(self.enrollment_dao)
+        self.report_service = ReportService(self.enrollment_service)
         self.current_menu = MainMenu(self)
 
     def navigate(self, menu: Menu):
