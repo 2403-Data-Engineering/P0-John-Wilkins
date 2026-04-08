@@ -5,6 +5,7 @@ from models.classes import Classes
 class EnrollmentDAO:
     def __init__(self, connection):
         # pass Connection is handled inside each function
+        pass
     def is_enrolled(student_id: int, class_id: int) -> bool:
         with get_connection() as conn:
             cursor = conn.cursor()
