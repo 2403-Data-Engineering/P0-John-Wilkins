@@ -40,7 +40,7 @@ class ProfessorDAO:
             cursor = conn.cursor()
             cursor.execute(
                 "UPDATE professor SET first_name=%s, last_name=%s, department=%s, email=%s WHERE professor_id=%s",
-                [professor.first_name, professor.last_name, professor.department, professor.email, professor.id]
+                [professor.first_name, professor.last_name, professor.department, professor.email, professor.professor_id]
                 )
             conn.commit()
 
